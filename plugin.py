@@ -124,7 +124,7 @@ class LspElixirPlugin(LanguageHandler):
 
         return read_client_config(self.name, config)
 
-    def on_start(self, window) -> bool:
+    def on_start(self, window):
         if not is_elixir_installed():
             sublime.status_message(
                 "Please install Elixir for LSP-elixir plugin to work.")
