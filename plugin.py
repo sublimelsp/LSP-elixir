@@ -100,6 +100,13 @@ def download_server():
     thread.start()
 
 
+def delete_server():
+    server = get_server_info()
+    target_dir = get_server_dir(server.version)
+    log_debug("Deleting server from {}".format(server.url))
+    shutil.rmtree(target_dir, ignore_errors=True)
+
+
 def get_server_info():
     """Load server data from server.json"""
     filename = "Packages/{}/server.json".format(__package__)
@@ -147,3 +154,9 @@ class LspElixirPlugin(LanguageHandler):
 def plugin_loaded():
     if not is_server_downloaded():
         download_server()
+
+
+def plugin_unloaded():
+    """Called when the plugin is disabled or removed."""
+    if is_server_downloaded():
+        delete_server()
