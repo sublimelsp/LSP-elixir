@@ -1,7 +1,6 @@
 import hashlib
 import json
 import os
-import platform
 import shutil
 import sublime
 
@@ -16,7 +15,7 @@ from collections import namedtuple
 
 Server = namedtuple("Server", ["url", "hash", "version"])
 
-IS_WINDOWS = platform.system() == "Windows"
+IS_WINDOWS = sublime.platform() == "windows"
 
 
 # Keys to read and their fallbacks.
