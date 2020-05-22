@@ -1,0 +1,10 @@
+[
+    {
+        "caption": "Preferences: LSP-elixir Settings",
+        "command": "edit_settings",
+        "args": {
+            "base_file": "${packages}/LSP-elixir/LSP-elixir.sublime-settings",
+            "default": "// Settings in here override those in \"LSP-elixir/LSP-elixir.sublime-settings\"\n\n{\n\t$0\n}\n"
+        }
+    },
+]

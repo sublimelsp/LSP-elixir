@@ -1,0 +1,15 @@
+{
+	"languages": [
+		{
+			"languageId": "elixir",
+			"scopes": [
+				"source.elixir"
+			],
+			"syntaxes": [
+				"Packages/Elixir/Syntaxes/Elixir.tmLanguage"
+			]
+		}
+	],
+	"initializationOptions": {},
+	"settings": {},
+}
