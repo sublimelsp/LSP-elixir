@@ -1,5 +1,4 @@
 import hashlib
-import json
 import os
 import shutil
 import sublime
@@ -11,9 +10,10 @@ from sublime_lib import ActivityIndicator
 from threading import Thread
 from urllib.request import urlretrieve
 from zipfile import ZipFile
-from collections import namedtuple
 
-Server = namedtuple("Server", ["url", "hash", "version"])
+SERVER_URL = "https://github.com/elixir-lsp/elixir-ls/releases/download/v0.4.0/elixir-ls.zip"
+SERVER_HASH = "9124a63b7eb4df805ce536995b823cd75da9ffec5c61d297d6676bdc1ed201a2"
+SERVER_VERSION = "0.4.0"
 
 IS_WINDOWS = sublime.platform() == "windows"
 
@@ -48,9 +48,8 @@ def get_server_dir(version):
 
 def get_server_exec():
     """Returns path to the server executable (it may not exist)."""
-    server = get_server_info()
     exe = "language_server.bat" if IS_WINDOWS else "language_server.sh"
-    return os.path.join(get_server_dir(server.version), exe)
+    return os.path.join(get_server_dir(SERVER_VERSION), exe)
 
 
 def is_valid_hash(path, expected):
@@ -75,12 +74,11 @@ def unpack_server(zip_file, target_dir):
 
 
 def download_server():
-    server = get_server_info()
-    target_dir = get_server_dir(server.version)
-    log_debug("Downloading server from {}".format(server.url))
+    target_dir = get_server_dir(SERVER_VERSION)
+    log_debug("Downloading server from {}".format(SERVER_URL))
 
     def _done(tmp_file):
-        if is_valid_hash(tmp_file, server.hash):
+        if is_valid_hash(tmp_file, SERVER_HASH):
             log_debug("Server hash is valid")
             unpack_server(tmp_file, target_dir)
         else:
@@ -92,7 +90,7 @@ def download_server():
         target = sublime.active_window()
         label = "Downloading Elixir language server binary"
         with ActivityIndicator(target, label):
-            tmp_file, _ = urlretrieve(server.url)
+            tmp_file, _ = urlretrieve(SERVER_URL)
             _done(tmp_file)
 
     thread = Thread(target=_download)
@@ -100,17 +98,9 @@ def download_server():
 
 
 def delete_server():
-    server = get_server_info()
-    target_dir = get_server_dir(server.version)
-    log_debug("Deleting server from {}".format(server.url))
+    target_dir = get_server_dir(SERVER_VERSION)
+    log_debug("Deleting server from {}".format(target_dir))
     shutil.rmtree(target_dir, ignore_errors=True)
-
-
-def get_server_info():
-    """Load server data from server.json"""
-    filename = "Packages/{}/server.json".format(__package__)
-    server = json.loads(sublime.load_resource(filename))
-    return Server(server["url"], server["sha256"], server["version"])
 
 
 def is_server_downloaded():
