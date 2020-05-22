@@ -17,8 +17,6 @@ SERVER_VERSION = "0.4.0"
 
 IS_WINDOWS = sublime.platform() == "windows"
 
-
-# Keys to read and their fallbacks.
 DEAFULT_SETTINGS = {
     'env': {},
     'experimental_capabilities': {},
@@ -58,9 +56,14 @@ def is_valid_hash(path, expected):
         return calculated == expected
 
 
-def unpack_server(zip_file, target_dir):
-    log_debug("Unpacking server to: {}".format(target_dir))
+def unpack_server(zip_file):
+    if not is_valid_hash(zip_file, SERVER_HASH):
+        log_debug("Invalid hash, aborting")
+        return
+
+    target_dir = get_server_dir(SERVER_VERSION)
     os.makedirs(target_dir, exist_ok=True)
+    log_debug("Unpacking server to: {}".format(target_dir))
 
     with ZipFile(zip_file, "r") as f:
         f.extractall(target_dir)
@@ -70,30 +73,25 @@ def unpack_server(zip_file, target_dir):
         os.chmod(os.path.join(target_dir, "language_server.sh"), 0o755)
         os.chmod(os.path.join(target_dir, "launch.sh"), 0o755)
 
-    log_debug("Server downloaded.")
+    log_debug("Server installed")
 
 
 def download_server():
-    target_dir = get_server_dir(SERVER_VERSION)
     log_debug("Downloading server from {}".format(SERVER_URL))
+    target = sublime.active_window()
+    label = "Downloading Elixir language server binary"
 
-    def _done(tmp_file):
-        if is_valid_hash(tmp_file, SERVER_HASH):
-            log_debug("Server hash is valid")
-            unpack_server(tmp_file, target_dir)
-        else:
-            log_debug("Invalid hash, aborting")
-
-        os.unlink(tmp_file)
-
-    def _download():
-        target = sublime.active_window()
-        label = "Downloading Elixir language server binary"
-        with ActivityIndicator(target, label):
+    with ActivityIndicator(target, label):
+        try:
             tmp_file, _ = urlretrieve(SERVER_URL)
-            _done(tmp_file)
+            unpack_server(tmp_file)
+            os.unlink(tmp_file)
+        except Exception as ex:
+            log_debug("Failed downloading server: {}".format(ex))
 
-    thread = Thread(target=_download)
+
+def download_server_async():
+    thread = Thread(target=download_server)
     thread.start()
 
 
@@ -142,7 +140,7 @@ class LspElixirPlugin(LanguageHandler):
 
 def plugin_loaded():
     if not is_server_downloaded():
-        download_server()
+        download_server_async()
 
 
 def plugin_unloaded():
