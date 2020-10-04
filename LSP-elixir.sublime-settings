@@ -43,11 +43,17 @@
 			],
 
 			// Formatter to use for Dialyzer warnings
-			// Options are: dialyzer, dialyxir_short, dialyxir_long
+			// Options are:
+			//   * dialyzer - Original Dialyzer format
+			//   * dialyxir_short - Same as `mix dialyzer --format short`
+			//   * dialyxir_long - Same as `mix dialyzer --format long`
 			"dialyzerFormat": "dialyxir_long",
 
 			// Mix environment to use for compilation
 			"mixEnv": "test",
+
+			// Mix target to use for compilation (requires Elixir >= 1.8)
+			"mixTarget": null,
 
 			// Subdirectory containing Mix project if not in the project root
 			"projectDir": null,
