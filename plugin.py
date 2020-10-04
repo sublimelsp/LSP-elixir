@@ -12,7 +12,7 @@ from urllib.request import urlretrieve
 from zipfile import ZipFile
 
 SERVER_URL = "https://github.com/elixir-lsp/elixir-ls/releases/download/v0.6.0/elixir-ls.zip"
-SERVER_HASH = "04fd9220b41e588ece18be92e3f7d1cb831ed91048af7af7b28d08c3d4855083"
+SERVER_HASH = "2784cf0964ec0723b46ab51edc81f84914b4fd5f6687a00822edd12bb1be6c71"
 SERVER_VERSION = "0.6.0"
 
 IS_WINDOWS = sublime.platform() == "windows"
