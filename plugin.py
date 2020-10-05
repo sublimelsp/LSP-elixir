@@ -4,10 +4,9 @@ import shutil
 import sublime
 
 from LSP.plugin.core import logging
-from LSP.plugin.core.handlers import LanguageHandler
-from LSP.plugin.core.settings import read_client_config
+from LSP.plugin.core.sessions import AbstractPlugin
+from LSP.plugin.core.promise import Promise
 from sublime_lib import ActivityIndicator
-from threading import Thread
 from urllib.request import urlretrieve
 from zipfile import ZipFile
 
@@ -90,11 +89,6 @@ def download_server():
             log_debug("Failed downloading server: {}".format(ex))
 
 
-def download_server_async():
-    thread = Thread(target=download_server)
-    thread.start()
-
-
 def delete_server():
     target_dir = get_server_dir(SERVER_VERSION)
     log_debug("Deleting server from {}".format(target_dir))
@@ -105,42 +99,40 @@ def is_server_downloaded():
     return os.path.exists(get_server_exec())
 
 
-class LspElixirPlugin(LanguageHandler):
-    @property
-    def name(self):
-        return __package__.lower()
+class LspElixirPlugin(AbstractPlugin):
+    @classmethod
+    def name(cls):
+        return "elixir"
 
-    @property
-    def config(self):
+    @classmethod
+    def configuration(cls):
         config = {
             "enabled": True,
             "command": [get_server_exec()],
         }
+        config.update(DEAFULT_SETTINGS)
 
-        filename = '{}.sublime-settings'.format(__package__)
-        settings = sublime.load_settings(filename)
-        for key, default in DEAFULT_SETTINGS.items():
-            config[key] = settings.get(key, default)
+        user_configs, file_path = super().configuration()
+        for key, value in config.items():
+            if not user_configs.has(key):
+                user_configs.set(key, value)
 
-        return read_client_config(self.name, config)
+        return user_configs, file_path
 
-    def on_start(self, window):
-        if not is_elixir_installed():
-            sublime.status_message(
-                "Please install Elixir for LSP-elixir plugin to work.")
-            return False
+    @classmethod
+    def needs_update_or_installation(cls):
+        return not is_server_downloaded()
 
-        if not is_server_downloaded():
-            sublime.status_message(
-                "Elixir Language Server not yet downloaded.")
-            return False
+    @classmethod
+    def install_or_update(cls):
+        download_server()
 
-        return True
-
-
-def plugin_loaded():
-    if not is_server_downloaded():
-        download_server_async()
+    def on_pre_server_command(self, command):
+        if command['command'].startswith('editor.action'):
+            return Promise(
+                lambda _: logging.debug("lsp-elixir: intercepted command {}".format(command))
+            )
+        return None
 
 
 def plugin_unloaded():
