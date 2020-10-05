@@ -4,7 +4,7 @@ import shutil
 import sublime
 
 from LSP.plugin.core import logging
-from LSP.plugin.core.sessions import AbstractPlugin
+from LSP.plugin import AbstractPlugin
 from LSP.plugin.core.promise import Promise
 from sublime_lib import ActivityIndicator
 from urllib.request import urlretrieve
