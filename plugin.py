@@ -127,12 +127,12 @@ class LspElixirPlugin(AbstractPlugin):
     def install_or_update(cls):
         download_server()
 
-    def on_pre_server_command(self, command):
+    def on_pre_server_command(self, command, done):
         if command['command'].startswith('editor.action'):
-            return Promise(
-                lambda _: logging.debug("lsp-elixir: intercepted command {}".format(command))
-            )
-        return None
+            logging.debug("lsp-elixir: intercepted command {}".format(command)
+            done()
+            return True
+        return False
 
 
 def plugin_unloaded():
