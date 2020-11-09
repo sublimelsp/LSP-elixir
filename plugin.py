@@ -128,7 +128,7 @@ class LspElixirPlugin(AbstractPlugin):
 
     def on_pre_server_command(self, command, done):
         if command['command'].startswith('editor.action'):
-            logging.debug("lsp-elixir: intercepted command {}".format(command)
+            logging.debug("lsp-elixir: intercepted command {}".format(command))
             done()
             return True
         return False
