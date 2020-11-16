@@ -9,9 +9,9 @@ from sublime_lib import ActivityIndicator
 from urllib.request import urlretrieve
 from zipfile import ZipFile
 
-SERVER_URL = "https://github.com/elixir-lsp/elixir-ls/releases/download/v0.6.0/elixir-ls.zip"
-SERVER_HASH = "2784cf0964ec0723b46ab51edc81f84914b4fd5f6687a00822edd12bb1be6c71"
-SERVER_VERSION = "0.6.0"
+SERVER_URL = "https://github.com/elixir-lsp/elixir-ls/releases/download/v0.6.2/elixir-ls.zip"
+SERVER_HASH = "b2d9acbc06de56c699fc6f3dc474166426872d7fba27d7de20d07e3135914a3b"
+SERVER_VERSION = "0.6.2"
 
 IS_WINDOWS = sublime.platform() == "windows"
 
