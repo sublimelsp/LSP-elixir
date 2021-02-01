@@ -126,13 +126,6 @@ class LspElixirPlugin(AbstractPlugin):
     def install_or_update(cls):
         download_server()
 
-    def on_pre_server_command(self, command, done):
-        if command['command'].startswith('editor.action'):
-            logging.debug("lsp-elixir: intercepted command {}".format(command))
-            done()
-            return True
-        return False
-
 
 def plugin_unloaded():
     """Called when the plugin is disabled or removed."""
