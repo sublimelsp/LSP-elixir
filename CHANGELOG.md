@@ -1,6 +1,11 @@
 LSP-Elixir Changelog
 ====================
 
+0.3.1 (2021-02-01)
+------------------
+
+* Upgrade elixir-lsp to 0.6.3 (thanks @princemaple)
+
 0.3.0 (2020-10-04)
 ------------------
 
