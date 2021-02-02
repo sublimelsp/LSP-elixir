@@ -11,9 +11,9 @@ from threading import Thread
 from urllib.request import urlretrieve
 from zipfile import ZipFile
 
-SERVER_URL = "https://github.com/elixir-lsp/elixir-ls/releases/download/v0.6.3/elixir-ls.zip"
-SERVER_HASH = "7e23dc965c261b3f55c9c2e622362c2f28ead2d4845f102c4fa73f4deca9b73f"
-SERVER_VERSION = "0.6.3"
+SERVER_URL = "https://github.com/elixir-lsp/elixir-ls/releases/download/v0.6.4/elixir-ls.zip"
+SERVER_HASH = "4c1be629ddd98908e4c0e46284f41afc27c5cde4eded946ed343ea5eb7f5e813"
+SERVER_VERSION = "0.6.4"
 
 IS_WINDOWS = sublime.platform() == "windows"
 
