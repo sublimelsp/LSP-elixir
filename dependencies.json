@@ -1,5 +1,8 @@
 {
 	"*": {
-		"*": ["lsp_utils", "sublime_lib"]
+		"*": [
+			"lsp_utils",
+			"sublime_lib"
+		]
 	}
 }
