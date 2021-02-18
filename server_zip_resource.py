@@ -33,7 +33,7 @@ class ServerZipResource(ServerResourceInterface):
         self._executables = executables
 
     def get_server_dir(self) -> str:
-        return os.path.join(self._storage_path, "server", self._version)
+        return os.path.join(self._storage_path, self._package_name, "server", self._version)
 
     def get_server_exec(self) -> str:
         return os.path.join(self.get_server_dir(), self._binary_path)
