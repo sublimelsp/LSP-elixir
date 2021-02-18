@@ -2,8 +2,6 @@ import sublime
 
 from lsp_utils import GenericClientHandler, ServerResourceInterface
 from LSP.plugin.core.typing import Optional
-from LSP.plugin import DottedDict
-from LSP.plugin.core.typing import List
 
 from .server_zip_resource import ServerZipResource
 
@@ -15,9 +13,21 @@ SERVER_EXECUTABLES = ["language_server.sh", "launch.sh"]
 BINARY_PATH = "language_server.bat" if sublime.platform() == 'windows' else "language_server.sh"
 
 
+def plugin_loaded() -> None:
+    LspElixirPlugin.setup()
+
+
+def plugin_unloaded() -> None:
+    LspElixirPlugin.cleanup()
+
+
 class LspElixirPlugin(GenericClientHandler):
     package_name = __package__
     __server = None
+
+    @classmethod
+    def get_displayed_name(cls) -> str:
+        return "lsp-elixir"
 
     @classmethod
     def manages_server(cls) -> bool:
@@ -26,7 +36,8 @@ class LspElixirPlugin(GenericClientHandler):
     @classmethod
     def get_server(cls) -> Optional[ServerResourceInterface]:
         if not cls.__server:
-            cls.__server = ServerZipResource(cls.package_name,
+            cls.__server = ServerZipResource(cls.storage_path(),
+                                             cls.package_name,
                                              BINARY_PATH,
                                              SERVER_URL,
                                              SERVER_VERSION,

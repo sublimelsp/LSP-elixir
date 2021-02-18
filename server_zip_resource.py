@@ -1,6 +1,5 @@
 import hashlib
 import os
-import shutil
 import sublime
 
 from zipfile import ZipFile
@@ -15,6 +14,7 @@ __all__ = ['ServerZipResource']
 
 class ServerZipResource(ServerResourceInterface):
     def __init__(self,
+                 storage_path: str,
                  package_name: str,
                  binary_path: str,
                  asset_url: str,
@@ -22,6 +22,7 @@ class ServerZipResource(ServerResourceInterface):
                  *,
                  asset_hash: str = None,
                  executables: List[str] = []) -> None:
+        self._storage_path = storage_path
         self._package_name = package_name
         self._binary_path = binary_path
         self._url = asset_url
@@ -31,13 +32,8 @@ class ServerZipResource(ServerResourceInterface):
         self._hash = asset_hash
         self._executables = executables
 
-    def get_cache_path(self) -> str:
-        cache_path = os.path.join(sublime.cache_path(), __package__)
-        os.makedirs(cache_path, exist_ok=True)
-        return cache_path
-
     def get_server_dir(self) -> str:
-        return os.path.join(self.get_cache_path(), "server", self._version)
+        return os.path.join(self._storage_path, "server", self._version)
 
     def get_server_exec(self) -> str:
         return os.path.join(self.get_server_dir(), self._binary_path)
