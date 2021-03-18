@@ -41,5 +41,6 @@ class LspElixirPlugin(GenericClientHandler):
                                              BINARY_PATH,
                                              SERVER_URL,
                                              SERVER_VERSION,
+                                             asset_hash=SERVER_HASH,
                                              executables=SERVER_EXECUTABLES)
         return cls.__server
