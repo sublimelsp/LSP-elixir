@@ -1,9 +1,10 @@
 LSP-Elixir Changelog
 ====================
 
-0.3.3 (unreleased)
+0.4.0 (2021-03-18)
 ------------------
 
+* Use lsp_utils for server handling (thanks @princemaple)
 * Upgrade elixir-lsp to 0.6.5 (thanks @optikfluffel)
 
 0.3.2 (2021-02-02)
