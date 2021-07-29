@@ -1,4 +1,5 @@
 {
+	"command": ["$server_path"],
 	"languages": [
 		{
 			"languageId": "elixir",
