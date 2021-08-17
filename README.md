@@ -29,5 +29,3 @@ To format your code on save add the following setting to your syntax-specific se
   "lsp_format_on_save": true
 }
 ```
-
-Source: https://lsp.readthedocs.io/en/latest/features/#configuring
