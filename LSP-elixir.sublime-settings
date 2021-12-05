@@ -1,16 +1,4 @@
 {
-	"command": ["$server_path"],
-	"languages": [
-		{
-			"languageId": "elixir",
-			"scopes": [
-				"source.elixir"
-			],
-			"syntaxes": [
-				"Packages/Elixir/Syntaxes/Elixir.tmLanguage"
-			]
-		}
-	],
 	"initializationOptions": {},
 	"settings": {
 		"elixirLS": {
@@ -62,5 +50,20 @@
 			// Automatically fetch project dependencies when compiling
 			"fetchDeps": true,
 		}
-	}
+	},
+	"command": ["$server_path"],
+	// ST4
+	"selector": "source.elixir",
+	// ST3
+	"languages": [
+		{
+			"languageId": "elixir",
+			"scopes": [
+				"source.elixir"
+			],
+			"syntaxes": [
+				"Packages/Elixir/Syntaxes/Elixir.tmLanguage"
+			]
+		}
+	]
 }
