@@ -3,7 +3,7 @@
 Elixir support for Sublime Text's LSP plugin provided through
 [ElixirLS](https://github.com/elixir-lsp/elixir-ls/).
 
-Requires **Elixir 1.11.0+** and **OTP 22+**. A good way of installing these is
+Requires **Elixir 1.12.0+** and **OTP 22+**. A good way of installing these is
 using the [ASDF package manager](https://github.com/asdf-vm/asdf) with the
 [asdf-elixir plugin](https://github.com/asdf-vm/asdf-elixir). On Windows,
 [Scoop](https://scoop.sh/) is a solid option. `scoop install elixir` or 
