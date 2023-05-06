@@ -6,6 +6,7 @@ https://github.com/elixir-lsp/elixir-ls/releases
 
 import hashlib
 import json
+import os
 import re
 import urllib.request
 
@@ -28,6 +29,10 @@ def main():
         return
 
     update_version(latest_version, release)
+
+    with open(os.environ["GITHUB_OUTPUT"], "a") as gh_output:
+        print(f"version={latest_version}", file=gh_output)
+
     print(f"\n✓ Updated to {latest_version}")
 
 
