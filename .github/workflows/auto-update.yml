@@ -1,0 +1,43 @@
+name: Auto Update
+
+on:
+  schedule:
+    - cron: 0 0 * * *
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Run script to check for changes
+        id: check
+        run: yes | python update.py
+
+      - name: Check for code diffs
+        id: diff
+        run: echo "diff=$(git diff --name-only)" >> "$GITHUB_OUTPUT"
+
+      - name: Create pull request
+        if: steps.diff.outputs.diff != ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.check.outputs.version }}
+        run: |
+          git add -A
+          git checkout -b "elixir-ls-$VERSION"
+
+          git config user.name 'Po Chen'
+          git config user.email 'princemaple@users.noreply.github.com'
+
+          git commit -m "Bump elixir-ls to $VERSION"
+          git push origin "elixir-ls-$VERSION"
+
+          gh pr create --fill
