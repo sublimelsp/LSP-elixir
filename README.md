@@ -31,3 +31,15 @@ To format your code on save add the following setting to your syntax-specific se
   "lsp_format_on_save": true
 }
 ```
+
+## Upgrade to latest version
+
+For developers! To upgrade this library to use the latest version of elixir-ls,
+run:
+
+```
+./update.py
+```
+
+This will update the server info in `plugin.py` to match the latest [release of
+elixir-ls](https://github.com/elixir-lsp/elixir-ls/releases).
