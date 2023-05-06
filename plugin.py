@@ -5,9 +5,9 @@ from LSP.plugin.core.typing import Optional
 
 from .server_zip_resource import ServerZipResource
 
-SERVER_VERSION = "0.14.3"
-SERVER_URL = "https://github.com/elixir-lsp/elixir-ls/releases/download/v%s/elixir-ls.zip" % SERVER_VERSION
-SERVER_SHA256 = "6f3dc118ef2da6befc297f305c2cafc675eb1aee53172489265ee468deb192d6"
+SERVER_VERSION = "0.14.6"
+SERVER_URL = "https://github.com/elixir-lsp/elixir-ls/releases/download/v0.14.6/elixir-ls.zip"
+SERVER_SHA256 = "00c954d8ced5a25c6a90b41794d607ee2018134f4ff1d2987812f3b8e6d26c22"
 
 SERVER_EXECUTABLES = ["language_server.sh", "launch.sh"]
 BINARY_PATH = "language_server.bat" if sublime.platform() == 'windows' else "language_server.sh"
