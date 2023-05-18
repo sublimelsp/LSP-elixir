@@ -19,7 +19,7 @@ jobs:
 
       - name: Run script to check for changes
         id: check
-        run: yes | python update.py
+        run: yes | python scripts/update.py
 
       - name: Check for code diffs
         id: diff
