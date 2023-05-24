@@ -5,4 +5,4 @@
 /.gitignore      export-ignore
 /tox.ini         export-ignore
 
-scripts/**       export-ignore
+/scripts/**      export-ignore
