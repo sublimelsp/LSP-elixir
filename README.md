@@ -38,7 +38,7 @@ For developers! To upgrade this library to use the latest version of elixir-ls,
 run:
 
 ```
-./update.py
+./scripts/update.py
 ```
 
 This will update the server info in `plugin.py` to match the latest [release of
