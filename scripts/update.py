@@ -30,8 +30,9 @@ def main():
 
     update_version(latest_version, release)
 
-    with open(os.environ["GITHUB_OUTPUT"], "a") as gh_output:
-        print(f"version={latest_version}", file=gh_output)
+    if "GITHUB_OUTPUT" in os.environ:
+        with open(os.environ["GITHUB_OUTPUT"], "a") as gh_output:
+            print(f"version={latest_version}", file=gh_output)
 
     print(f"\n✓ Updated to {latest_version}")
 
@@ -47,9 +48,15 @@ def update_version(version, release):
     with open("plugin.py") as f:
         content = f.read()
 
-    content = re.sub(r"^SERVER_VERSION.+", f'SERVER_VERSION = "{version}"', content, 0, re.MULTILINE)
-    content = re.sub(r"^SERVER_URL.+", f'SERVER_URL = "{url}"', content, 0, re.MULTILINE)
-    content = re.sub(r"^SERVER_SHA256.+", f'SERVER_SHA256 = "{hash}"', content, 0, re.MULTILINE)
+    content = re.sub(
+        r"^SERVER_VERSION.+", f'SERVER_VERSION = "{version}"', content, 0, re.MULTILINE
+    )
+    content = re.sub(
+        r"^SERVER_URL.+", f'SERVER_URL = "{url}"', content, 0, re.MULTILINE
+    )
+    content = re.sub(
+        r"^SERVER_SHA256.+", f'SERVER_SHA256 = "{hash}"', content, 0, re.MULTILINE
+    )
 
     with open("plugin.py", "w") as f:
         f.write(content)
@@ -57,7 +64,8 @@ def update_version(version, release):
 
 def get_download_url(release):
     for asset in release["assets"]:
-        if asset["name"] == "elixir-ls.zip":
+        filename = asset["name"]
+        if filename.startswith("elixir-ls-v") and filename.endswith(".zip"):
             return asset["browser_download_url"]
     raise Exception("Asset url not found")
 
