@@ -5,9 +5,9 @@ from LSP.plugin.core.typing import Optional
 
 from .server_zip_resource import ServerZipResource
 
-SERVER_VERSION = "0.17.10"
-SERVER_URL = "https://github.com/elixir-lsp/elixir-ls/releases/download/v0.17.10/elixir-ls-v0.17.10.zip"
-SERVER_SHA256 = "555a2d179df51a7c4e7274103ef35e87455ccebb30038f35293d1ca6f1460c2e"
+SERVER_VERSION = "0.18.0"
+SERVER_URL = "https://github.com/elixir-lsp/elixir-ls/releases/download/v0.18.0/elixir-ls-v0.18.0.zip"
+SERVER_SHA256 = "fe4dd788e57c8fe0c2852eb14625ea0f90a7d10e987af35512b6e4788c8d77d4"
 
 SERVER_EXECUTABLES = ["language_server.sh", "launch.sh"]
 BINARY_PATH = (
