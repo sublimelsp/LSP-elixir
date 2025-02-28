@@ -7,7 +7,7 @@ Requires **Elixir 1.14.0+** and **OTP 25+**. A good way of installing these is
 using the [ASDF package manager](https://github.com/asdf-vm/asdf) with the
 [asdf-elixir plugin](https://github.com/asdf-vm/asdf-elixir). On Windows,
 [Scoop](https://scoop.sh/) is a solid option. `scoop install elixir` or 
-`scoop install elixir@1.14.1-otp-25`.
+`scoop install elixir@1.18.2-otp-27`.
 
 ## Installation
 
