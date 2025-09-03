@@ -4,5 +4,5 @@
 /.gitattributes  export-ignore
 /.gitignore      export-ignore
 /tox.ini         export-ignore
-
+/renovate.json   export-ignore
 /scripts/**      export-ignore
