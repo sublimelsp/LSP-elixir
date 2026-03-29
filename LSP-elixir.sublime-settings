@@ -1,5 +1,4 @@
 {
-	"initializationOptions": {},
 	"settings": {
 		"elixirLS": {
 			// Run ElixirLS's rapid Dialyzer when code is saved
