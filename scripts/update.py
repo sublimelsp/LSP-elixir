@@ -3,6 +3,7 @@
 Upgrade plugin.py server info to the latest release of elixir-ls as seen here:
 https://github.com/elixir-lsp/elixir-ls/releases
 """
+from __future__ import annotations
 
 import hashlib
 import json
