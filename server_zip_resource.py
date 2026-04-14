@@ -1,13 +1,13 @@
+from __future__ import annotations
+
 import hashlib
 import os
-import sublime
-
-from zipfile import ZipFile
 from urllib.request import urlretrieve
+from zipfile import ZipFile
 
+import sublime
 from lsp_utils import ServerResourceInterface, ServerStatus
 from sublime_lib import ActivityIndicator
-from LSP.plugin.core.typing import List
 
 __all__ = ['ServerZipResource']
 
@@ -21,7 +21,7 @@ class ServerZipResource(ServerResourceInterface):
                  asset_version: str,
                  *,
                  asset_hash: str = None,
-                 executables: List[str] = []) -> None:
+                 executables: list[str] = []) -> None:
         self._storage_path = storage_path
         self._package_name = package_name
         self._binary_path = binary_path

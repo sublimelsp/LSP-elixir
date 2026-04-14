@@ -1,7 +1,7 @@
-import sublime
+from __future__ import annotations
 
+import sublime
 from lsp_utils import GenericClientHandler, ServerResourceInterface
-from LSP.plugin.core.typing import Optional
 
 from .server_zip_resource import ServerZipResource
 
@@ -24,7 +24,7 @@ def plugin_unloaded() -> None:
 
 
 class LspElixirPlugin(GenericClientHandler):
-    package_name = __package__
+    package_name = str(__package__)
     __server = None
 
     @classmethod
@@ -36,7 +36,7 @@ class LspElixirPlugin(GenericClientHandler):
         return True
 
     @classmethod
-    def get_server(cls) -> Optional[ServerResourceInterface]:
+    def get_server(cls) -> ServerResourceInterface | None:
         if not cls.__server:
             cls.__server = ServerZipResource(
                 cls.storage_path(),
