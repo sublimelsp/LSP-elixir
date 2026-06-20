@@ -5,9 +5,9 @@ from lsp_utils import GenericClientHandler, ServerResourceInterface
 
 from .server_zip_resource import ServerZipResource
 
-SERVER_VERSION = "0.30.0"
-SERVER_URL = "https://github.com/elixir-lsp/elixir-ls/releases/download/v0.30.0/elixir-ls-v0.30.0.zip"
-SERVER_SHA256 = "924c3d44c9d04ba332e4613697ef0f91ff7a57c1205d4e9fcc1395bd0e69b042"
+SERVER_VERSION = "0.31.1"
+SERVER_URL = "https://github.com/elixir-lsp/elixir-ls/releases/download/v0.31.1/elixir-ls-v0.31.1.zip"
+SERVER_SHA256 = "bac08322ea3698157eb2373bb5b65e38c15df9dd41e1c06f142f874367fa472f"
 
 SERVER_EXECUTABLES = ["language_server.sh", "launch.sh"]
 BINARY_PATH = (
