@@ -43,7 +43,6 @@ def update_version(version, release):
     hash = calculate_hash(url)
 
     print(f"SERVER_VERSION = {version}")
-    print(f"SERVER_URL = {url}")
     print(f"SERVER_SHA256 = {hash}")
 
     with open("plugin.py") as f:
@@ -51,9 +50,6 @@ def update_version(version, release):
 
     content = re.sub(
         r"^SERVER_VERSION.+", f'SERVER_VERSION = "{version}"', content, 0, re.MULTILINE
-    )
-    content = re.sub(
-        r"^SERVER_URL.+", f'SERVER_URL = "{url}"', content, 0, re.MULTILINE
     )
     content = re.sub(
         r"^SERVER_SHA256.+", f'SERVER_SHA256 = "{hash}"', content, 0, re.MULTILINE

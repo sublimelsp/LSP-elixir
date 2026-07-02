@@ -20,7 +20,7 @@ class ServerZipResource(ServerResourceInterface):
                  asset_url: str,
                  asset_version: str,
                  *,
-                 asset_hash: str = None,
+                 asset_hash: str | None = None,
                  executables: list[str] = []) -> None:
         self._storage_path = storage_path
         self._package_name = package_name
