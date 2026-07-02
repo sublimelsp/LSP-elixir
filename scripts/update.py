@@ -3,6 +3,7 @@
 Upgrade plugin.py server info to the latest release of elixir-ls as seen here:
 https://github.com/elixir-lsp/elixir-ls/releases
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -49,10 +50,18 @@ def update_version(version, release):
         content = f.read()
 
     content = re.sub(
-        r"^SERVER_VERSION.+", f'SERVER_VERSION = "{version}"', content, 0, re.MULTILINE
+        r"^SERVER_VERSION.+",
+        f'SERVER_VERSION = "{version}"',
+        content,
+        count=0,
+        flags=re.MULTILINE,
     )
     content = re.sub(
-        r"^SERVER_SHA256.+", f'SERVER_SHA256 = "{hash}"', content, 0, re.MULTILINE
+        r"^SERVER_SHA256.+",
+        f'SERVER_SHA256 = "{hash}"',
+        content,
+        count=0,
+        flags=re.MULTILINE,
     )
 
     with open("plugin.py", "w") as f:
