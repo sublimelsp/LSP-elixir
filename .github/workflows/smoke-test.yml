@@ -20,7 +20,7 @@ jobs:
 
       - uses: erlef/setup-beam@v1
         with:
-          otp-version: '27'
+          otp-version: '29.1.2'
           elixir-version: '1.20'
 
       - uses: sublimelsp/lsp_smoke_test@v1
