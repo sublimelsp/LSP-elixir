@@ -26,4 +26,4 @@ jobs:
       - uses: sublimelsp/lsp_smoke_test@v1
         with:
           # Provides the Elixir syntax, which Sublime Text doesn't include.
-          extra-packages: princemaple/elixir-sublime-syntax@v2.2.0
+          extra-packages: princemaple/elixir-sublime-syntax@v
