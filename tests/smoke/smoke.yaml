@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/sublimelsp/lsp_smoke_test/v1/smoke.schema.json
+file: lib/smoke.ex
+# The session name, which differs from the package name.
+session_name: lsp-elixir
+# ElixirLS compiles the Mix project, which reports the unused variable.
+expected_diagnostics:
+  message: variable "name" is unused
+settings:
+  LSP-elixir.sublime-settings:
+    settings:
+      elixirLS:
+        # Dialyzer is slow to start and isn't needed for the compiler warning.
+        dialyzerEnabled: false
