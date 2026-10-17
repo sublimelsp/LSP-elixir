@@ -2,7 +2,10 @@
 # archive files. See http://git-scm.com/docs/gitattributes for details.
 /.editorconfig   export-ignore
 /.gitattributes  export-ignore
+/.github/ export-ignore
 /.gitignore      export-ignore
-/tox.ini         export-ignore
+/pyproject.toml export-ignore
 /renovate.json   export-ignore
-/scripts/**      export-ignore
+/scripts/ export-ignore
+/tests/ export-ignore
+/tox.ini         export-ignore
