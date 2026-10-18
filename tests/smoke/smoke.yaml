@@ -11,3 +11,4 @@ settings:
       elixirLS:
         # Dialyzer is slow to start and isn't needed for the compiler warning.
         dialyzerEnabled: false
+diagnostics_timeout: 240
