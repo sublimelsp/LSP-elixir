@@ -26,7 +26,7 @@ jobs:
       - uses: sublimelsp/lsp_smoke_test@v1
         with:
           # Provides the Elixir syntax, which Sublime Text doesn't include.
-          extra-packages: princemaple/elixir-sublime-syntax@v
+          extra-packages: ElixirSyntax
 
   # A single check whose name doesn't depend on the os matrix, for rulesets to require. It runs even when the workflow
   # is cancelled: a skipped job counts as passing for a required check.
