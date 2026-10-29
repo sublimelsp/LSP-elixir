@@ -34,12 +34,10 @@ To format your code on save add the following setting to your syntax-specific se
 
 ## Upgrade to latest version
 
-For developers! To upgrade this library to use the latest version of elixir-ls,
-run:
+Renovate opens a pull request that updates `SERVER_VERSION` in `plugin.py` when a new [release of
+elixir-ls](https://github.com/elixir-lsp/elixir-ls/releases) comes out, and the update-hash workflow pushes the new
+`SERVER_SHA256` to it. To update the hash locally after changing `SERVER_VERSION`, run:
 
 ```
-./scripts/update.py
+./scripts/update_hash.py
 ```
-
-This will update the server info in `plugin.py` to match the latest [release of
-elixir-ls](https://github.com/elixir-lsp/elixir-ls/releases).
