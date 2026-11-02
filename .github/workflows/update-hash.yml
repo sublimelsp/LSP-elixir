@@ -1,0 +1,64 @@
+name: Update hash
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'plugin.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  update-hash:
+    name: Update server hash
+    runs-on: ubuntu-latest
+    env:
+      # PRs from forks get no secrets, so the hash can't be pushed for them.
+      IS_FORK: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}
+
+    steps:
+      # Pushes made with GITHUB_TOKEN don't trigger workflows, so the smoke test wouldn't run on the new hash.
+      - uses: actions/create-github-app-token@v3
+        id: app-token
+        if: env.IS_FORK == 'false'
+        with:
+          client-id: ${{ vars.SUBLIMELSP_APP_CLIENT_ID }}
+          private-key: ${{ secrets.SUBLIMELSP_APP_PRIVATE_KEY }}
+          permission-contents: write
+
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          token: ${{ steps.app-token.outputs.token || github.token }}
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.15'
+
+      # Renovate only updates SERVER_VERSION.
+      - name: Update SERVER_SHA256
+        run: python scripts/update_hash.py
+
+      # Fails while the hash doesn't match the new version, so that the PR isn't merged before it does. The push runs
+      # the checks again on the new commit.
+      - name: Push the new hash
+        env:
+          BRANCH: ${{ github.head_ref || github.ref_name }}
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            exit 0
+          fi
+          git diff
+          if [ "$IS_FORK" = 'true' ]; then
+            echo "::error::SERVER_SHA256 doesn't match SERVER_VERSION: run ./scripts/update_hash.py"
+            exit 1
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git commit -am '[automated commit] update server hash'
+          git push origin "HEAD:refs/heads/$BRANCH"
+          echo "::error::Pushed the new hash to the PR. The checks run again on the new commit."
+          exit 1
