@@ -1,12 +1,17 @@
 from __future__ import annotations
 
-import sublime
-from lsp_utils import GenericClientHandler, ServerResourceInterface
+from functools import partial
+from pathlib import Path
 
-from .server_zip_resource import ServerZipResource
+import sublime
+from LSP.plugin import LspPlugin, OnPreStartContext
+from lsp_utils import InstallDirectory, download_and_extract_github_asset
+from typing_extensions import override
 
 SERVER_VERSION = "0.31.1"
-SERVER_URL = f"https://github.com/elixir-lsp/elixir-ls/releases/download/v{SERVER_VERSION}/elixir-ls-v{SERVER_VERSION}.zip"
+SERVER_REPO = "elixir-lsp/elixir-ls"
+SERVER_TAG = f"v{SERVER_VERSION}"
+SERVER_ASSET = f"elixir-ls-v{SERVER_VERSION}.zip"
 SERVER_SHA256 = "bac08322ea3698157eb2373bb5b65e38c15df9dd41e1c06f142f874367fa472f"
 
 SERVER_EXECUTABLES = ["language_server.sh", "launch.sh"]
@@ -16,35 +21,37 @@ BINARY_PATH = (
 
 
 def plugin_loaded() -> None:
-    LspElixirPlugin.setup()
+    LspElixirPlugin.register()
 
 
 def plugin_unloaded() -> None:
-    LspElixirPlugin.cleanup()
+    LspElixirPlugin.unregister()
 
 
-class LspElixirPlugin(GenericClientHandler):
-    package_name = str(__package__)
-    __server = None
+class LspElixirPlugin(LspPlugin):
+    @classmethod
+    @override
+    def on_pre_start_async(cls, context: OnPreStartContext) -> None:
+        server_path = context.configuration.root_settings.get("server_path")
+        if not server_path or server_path == "auto":
+            server_path = str(cls.install_server() / BINARY_PATH)
+        context.variables["server_path"] = server_path
 
     @classmethod
-    def get_displayed_name(cls) -> str:
-        return "lsp-elixir"
-
-    @classmethod
-    def manages_server(cls) -> bool:
-        return True
-
-    @classmethod
-    def get_server(cls) -> ServerResourceInterface | None:
-        if not cls.__server:
-            cls.__server = ServerZipResource(
-                cls.storage_path(),
-                cls.package_name,
-                BINARY_PATH,
-                SERVER_URL,
-                SERVER_VERSION,
-                asset_hash=SERVER_SHA256,
+    def install_server(cls) -> Path:
+        install_dir = InstallDirectory(
+            cls.plugin_storage_path,
+            "server",
+            SERVER_VERSION,
+            legacy_dirs=[cls.plugin_storage_path / "server"],
+        )
+        return install_dir.install(
+            partial(
+                download_and_extract_github_asset,
+                SERVER_REPO,
+                SERVER_TAG,
+                SERVER_ASSET,
                 executables=SERVER_EXECUTABLES,
+                sha256=SERVER_SHA256,
             )
-        return cls.__server
+        )
