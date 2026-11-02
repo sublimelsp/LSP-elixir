@@ -1,6 +1,23 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "github>sublimelsp/renovate-preset"
+    "github>sublimelsp/renovate-preset",
+    "github>sublimelsp/renovate-preset:automerge-server"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "The update-hash workflow updates SERVER_SHA256 on the pull request.",
+      "managerFilePatterns": [
+        "/^plugin\\.py$/"
+      ],
+      "matchStrings": [
+        "SERVER_VERSION = \"(?<currentValue>.+?)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "packageNameTemplate": "elixir-lsp/elixir-ls",
+      "extractVersionTemplate": "^v(?<version>.+)$",
+      "versioningTemplate": "semver"
+    }
   ]
 }
