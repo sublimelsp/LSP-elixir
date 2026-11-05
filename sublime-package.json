@@ -1,0 +1,192 @@
+{
+  "contributions": {
+    "settings": [
+      {
+        "file_patterns": [
+          "/LSP-elixir.sublime-settings"
+        ],
+        "schema": {
+          "$id": "sublime://settings/LSP-elixir",
+          "allOf": [
+            {
+              "$ref": "sublime://settings/LSP-plugin-base"
+            },
+            {
+              "$ref": "sublime://settings/LSP-elixir#/definitions/PluginConfig"
+            }
+          ],
+          "definitions": {
+            "PluginConfig": {
+              "properties": {
+                "server_path": {
+                  "type": "string",
+                  "default": "auto",
+                  "markdownDescription": "The path to the server binary to use for starting the language server. Use `auto` for the package to manage (install/update) server automatically.\n\n> [!NOTE]\n> Change this instead of directly updating `command` - the `${server_path}` variable is dynamically resolved based on this setting.\n\n> [!WARNING]\n> Using custom binary could result in package settings not matching what server supports."
+                },
+                "settings": {
+                  "properties": {
+                    "elixirLS": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "autoBuild": {
+                          "markdownDescription": "Trigger ElixirLS build when code is saved",
+                          "type": "boolean",
+                          "default": true
+                        },
+                        "autoInsertRequiredAlias": {
+                          "markdownDescription": "Enable auto-insert required alias. This is true (enabled) by default.",
+                          "type": "boolean",
+                          "default": true
+                        },
+                        "dialyzerEnabled": {
+                          "markdownDescription": "Run ElixirLS's rapid Dialyzer when code is saved",
+                          "type": "boolean",
+                          "default": true
+                        },
+                        "dialyzerFormat": {
+                          "markdownDescription": "Formatter to use for Dialyzer warnings",
+                          "type": "string",
+                          "default": "dialyxir_long",
+                          "enum": [
+                            "dialyzer",
+                            "dialyxir_short",
+                            "dialyxir_long"
+                          ],
+                          "markdownEnumDescriptions": [
+                            "Original Dialyzer format",
+                            "Same as `mix dialyzer --format short`",
+                            "Same as `mix dialyzer --format long`"
+                          ]
+                        },
+                        "dialyzerWarnOpts": {
+                          "markdownDescription": "Dialyzer options to enable or disable warnings - See Dialyzer's documentation for options",
+                          "type": "array",
+                          "default": [],
+                          "items": {
+                            "type": "string",
+                            "enum": [
+                              "no_return",
+                              "no_unused",
+                              "no_unknown",
+                              "no_improper_lists",
+                              "no_fun_app",
+                              "no_match",
+                              "no_opaque",
+                              "no_fail_call",
+                              "no_contracts",
+                              "no_behaviours",
+                              "no_undefined_callbacks",
+                              "unmatched_returns",
+                              "error_handling",
+                              "no_missing_calls",
+                              "specdiffs",
+                              "overspecs",
+                              "underspecs",
+                              "no_underspecs",
+                              "extra_return",
+                              "no_extra_return",
+                              "missing_return",
+                              "no_missing_return",
+                              "unknown",
+                              "overlapping_contract",
+                              "opaque_union",
+                              "no_opaque_union"
+                            ]
+                          }
+                        },
+                        "dotFormatter": {
+                          "markdownDescription": "Path to a custom .formatter.exs file used when formatting documents",
+                          "type": "string"
+                        },
+                        "enableTestLenses": {
+                          "markdownDescription": "Show code lenses to run tests in terminal.",
+                          "type": "boolean",
+                          "default": false
+                        },
+                        "envVariables": {
+                          "markdownDescription": "Environment variables to use for compilation",
+                          "type": "object"
+                        },
+                        "fetchDeps": {
+                          "markdownDescription": "Automatically fetch project dependencies when compiling.",
+                          "type": "boolean",
+                          "default": false
+                        },
+                        "mcpEnabled": {
+                          "markdownDescription": "Enable or disable the MCP server",
+                          "type": "boolean",
+                          "default": false
+                        },
+                        "mcpPort": {
+                          "markdownDescription": "Set a specific port for the MCP server. If not set, uses `3789 + hash(workspace_path)` for predictable port assignment per workspace",
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "mixEnv": {
+                          "markdownDescription": "Mix environment to use for compilation",
+                          "type": "string",
+                          "default": "test"
+                        },
+                        "mixTarget": {
+                          "markdownDescription": "Mix target to use for compilation",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "projectDir": {
+                          "markdownDescription": "Subdirectory containing Mix project if not in the project root",
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "default": ""
+                        },
+                        "signatureAfterComplete": {
+                          "markdownDescription": "Show signature help after confirming autocomplete.",
+                          "type": "boolean",
+                          "default": true
+                        },
+                        "stdlibSrcDir": {
+                          "markdownDescription": "Subdirectory where the Elixir stdlib resides to allow for source code lookup. E.g. /home/youruser/.asdf/installs/elixir/1.18.2",
+                          "type": "string",
+                          "default": ""
+                        },
+                        "suggestSpecs": {
+                          "markdownDescription": "Suggest @spec annotations inline using Dialyzer's inferred success typings (Requires Dialyzer).",
+                          "type": "boolean",
+                          "default": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "file_patterns": [
+          "/*.sublime-project"
+        ],
+        "schema": {
+          "properties": {
+            "settings": {
+              "properties": {
+                "LSP": {
+                  "properties": {
+                    "LSP-elixir": {
+                      "$ref": "sublime://settings/LSP-elixir#/definitions/PluginConfig"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}
